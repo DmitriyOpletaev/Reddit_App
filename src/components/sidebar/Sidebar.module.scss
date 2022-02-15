@@ -1,0 +1,19 @@
+.sidebar{
+  margin-top: 50px;
+  width: 400px;
+  padding: 10px;
+  position: relative;
+  .sidebar__container{
+    height: 500px;
+    width: 100%;
+    position: sticky;
+    top:90px;
+    left: 0;
+    background: white;
+
+
+    -webkit-box-shadow: -1px 0px 15px 3px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: -1px 0px 15px 3px rgba(34, 60, 80, 0.2);
+    box-shadow: -1px 0px 15px 3px rgba(34, 60, 80, 0.2);
+  }
+}
