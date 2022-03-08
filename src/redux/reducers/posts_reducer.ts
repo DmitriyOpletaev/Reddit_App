@@ -1,24 +1,38 @@
 import {AppState, BaseThunkType, InferActionsTypes} from "../Redux_Store"
-import {PostsKey, RedditPostsAPI} from "../../api/requests/Posts_API"
+import {GetPostsParamsType, RedditPostsAPI, SortType} from "../../api/requests/Posts_API"
+import {createPosts} from "../../helpers/createPost";
 
-type PostsType = {
-    kind: string,
+type Actions = InferActionsTypes<typeof actionsPosts>
+type ThunkType = BaseThunkType<Actions>
+type InitialStateType = typeof initialState
+export type PostsType = {
+    postId:string
+    postFullName:string
     author: {
-        author: string,
+        authorId:string
+        authorName: string,
     },
+    community:{
+        communityId:string
+        communityIcon:string
+        communityName:string
+    }
+    createdTime:number
+    commentsCount:number
+    over18:boolean
     title: string,
-    selftext: string,
+    selfText: string,
     thumbnail?:string,
     video?:string
-
-
 }
+
+
+
 let initialState = {
     isLoadingPosts: false,
     posts: [] as PostsType[]
-
 }
-type InitialStateType = typeof initialState
+
 
 const postsReducer = (state = initialState, action: Actions): InitialStateType => {
 
@@ -36,8 +50,6 @@ const postsReducer = (state = initialState, action: Actions): InitialStateType =
     }
 }
 
-type Actions = InferActionsTypes<typeof actionsPosts>
-type ThunkType = BaseThunkType<Actions>
 
 export const actionsPosts = {
     setIsLoading: (isLoadingPosts: boolean) => ({
@@ -49,25 +61,17 @@ export const actionsPosts = {
 }
 
 
-export const getPosts = (postKey: PostsKey, accessToken: string): ThunkType => async (dispatch) => {
+export const getPosts = (accessToken: string,
+                         sort:SortType,
+                         subredditName:string|null=null,
+                         searchParams:GetPostsParamsType={}): ThunkType => async (dispatch) => {
     try {
         dispatch(actionsPosts.setIsLoading(true))
-        const data = await RedditPostsAPI.getPosts(postKey, accessToken)
-        console.log(data)
-        const posts: Array<PostsType> = data.data.children.map((e) => {
-                return ({
-                    kind: e.kind,
-                    title: e.data.title,
-                    author: {author: e.data.author},
-                    selftext: e.data.selftext,
-                    thumbnail:e.data.url,
-                    video:e.data.media?.reddit_video?.fallback_url
-                })
-            }
-        )
+        const data = await RedditPostsAPI.getPosts(accessToken,sort,subredditName,searchParams)
+        const posts = createPosts(data)
         dispatch(actionsPosts.setPosts(posts))
     } catch (err) {
-        alert('error getUserAccessToken')
+        alert('error getPosts')
     } finally {
         dispatch(actionsPosts.setIsLoading(false))
     }

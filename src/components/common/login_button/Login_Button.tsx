@@ -3,7 +3,7 @@ import {useNavigate, useSearchParams} from "react-router-dom"
 import {useEffect} from "react"
 import {Button} from "antd"
 import {credentialsReddit} from "../../../api/Reddit_API";
-import {authSelector, getAccessToken} from "../../../redux/reducers/Auth_Reducer";
+import {authSelector, getAccessToken} from "../../../redux/reducers/auth_reducer";
 
 export const LoginButton = () => {
     const {clientId, redirectUri} = credentialsReddit

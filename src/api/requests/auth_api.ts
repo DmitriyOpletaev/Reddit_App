@@ -1,4 +1,4 @@
-import {AuthTokens} from "../types_API/Auth_Types"
+import {AuthTokens} from "../../types/api_types/Auth_Types"
 import {credentialsReddit, instanceAuthReddit} from "../Reddit_API";
 
 

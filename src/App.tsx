@@ -1,24 +1,22 @@
 import React from 'react'
-import m from './App.module.scss'
-import {Listing} from "./components/listing/Listing";
-import {Sidebar} from "./components/sidebar/Sidebar";
 import {HeaderComponent} from "./components/header/Header";
+import {Content} from "antd/es/layout/layout";
+import {ContentPage} from "./components/content_page/ContentPage";
+import {Layout} from "antd";
+import m from './App.module.scss'
 
 
 function App() {
     return (
-        <div className={m.app_body}>
-            <div className={m.header}>
+        <Layout  className={m.app_layout}>
+            <div className={m.app_header}>
                 <HeaderComponent/>
             </div>
-            <div className={m.body}>
-                <div className={m.content__wrapper}>
-                    <Listing/>
-                    <Sidebar/>
-                </div>
 
-            </div>
-        </div>
+            <Content className={m.app_content}>
+                <ContentPage/>
+            </Content>
+        </Layout>
     )
 }
 

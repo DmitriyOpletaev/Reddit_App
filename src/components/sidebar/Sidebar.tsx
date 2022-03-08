@@ -1,11 +1,11 @@
 import m from './Sidebar.module.scss'
 
-export const Sidebar=()=>{
+export const Sidebar = () => {
 
-    return(
+    return (
         <div className={m.sidebar}>
             <div className={m.sidebar__container}>
-asdasdasdasd
+                asdasdasdasd
             </div>
         </div>
     )

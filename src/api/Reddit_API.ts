@@ -6,6 +6,7 @@ export const credentialsReddit = {
     clientSecret: 'MSQzHcTxGUPWYDNwv3ylcIyx29KsFg'
 }
 
+
 export const instanceAuthReddit=axios.create({
     baseURL:'https://www.reddit.com/api/v1/',
     headers:{

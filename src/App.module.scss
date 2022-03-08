@@ -1,21 +1,27 @@
-.app_body{
-  .header{
-    background: rgba(115, 112, 128, 0.84);
-    width: 100%;
-    height: 6vh;
-  }
-  .body{
-    background: rgba(255, 80, 121, 0.06);
-
-    min-height: 94vh;
-    height: max-content;
+.app_layout {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: blueviolet;
+  .app_header {
     display: flex;
-    justify-content: center;
-    .content__wrapper{
-      display: flex;
-      width: 100%;
-      max-width: 1200px;
-    }
+    justify-content: space-between;
+    align-items: center;
+    height: 6vh;
+    background: rgba(243, 39, 39, 0.24);
+  }
+
+  .app_content {
+    min-height: 94vh;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+
   }
 }
+
+
 

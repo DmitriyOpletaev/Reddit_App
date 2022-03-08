@@ -1,5 +1,5 @@
 import {AppState, BaseThunkType, InferActionsTypes} from "../Redux_Store"
-import {AuthTokens} from "../../api/types_API/Auth_Types";
+import {AuthTokens} from "../../types/api_types/Auth_Types";
 import {RedditAuthAPI} from "../../api/requests/auth_api";
 
 
