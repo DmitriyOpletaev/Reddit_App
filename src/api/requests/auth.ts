@@ -1,17 +1,23 @@
-import {AuthTokens} from "../../types/api_types/Auth_Types"
-import {credentialsReddit, instanceAuthReddit} from "../Reddit_API";
+import {credentialsReddit, instanceAuthReddit} from "../Reddit_API"
+import {AuthTokensResponse, NonAuthTokenResponse} from "../../types/api_types/auth_types";
 
 
 
 export const RedditAuthAPI = {
-    getAccessToken: (authCode: string) => {
-        return instanceAuthReddit.post<AuthTokens>(
+    getAuthAccessToken: (authCode: string) => {
+        return instanceAuthReddit.post<AuthTokensResponse>(
             'access_token',
             `grant_type=authorization_code&code=${authCode}&redirect_uri=${credentialsReddit.redirectUri}`
         ).then(res => res.data)
     },
-    refreshingToken:(refreshToken: string) => {
-        return instanceAuthReddit.post<AuthTokens>(
+    getNoneAuthAccessToken:()=>{
+        return instanceAuthReddit.post<NonAuthTokenResponse>(
+            'access_token',
+            `grant_type=client_credentials`
+        ).then(res=>res.data)
+    },
+    refreshAuthAccessToken:(refreshToken: string) => {
+        return instanceAuthReddit.post<AuthTokensResponse>(
             'access_token',
             `grant_type=refresh_token&refresh_token=${refreshToken}`
             ).then(res=>res.data)

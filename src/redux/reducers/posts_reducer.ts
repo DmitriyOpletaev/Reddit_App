@@ -1,36 +1,59 @@
-import {AppState, BaseThunkType, InferActionsTypes} from "../Redux_Store"
-import {GetPostsParamsType, RedditPostsAPI, SortType} from "../../api/requests/Posts_API"
+import {BaseThunkType, InferActionsTypes} from "../Redux_Store"
+import {GetPostsParamsType, RedditPostsAPI, SortType} from "../../api/requests/posts"
 import {createPosts} from "../../helpers/createPost";
+import {Post, PostAuthorDetails, PostCommunityDetails} from "../../types/reducers_types/PostsReducer_types";
 
 type Actions = InferActionsTypes<typeof actionsPosts>
 type ThunkType = BaseThunkType<Actions>
 type InitialStateType = typeof initialState
-export type PostsType = {
-    postId:string
-    postFullName:string
-    author: {
-        authorId:string
-        authorName: string,
-    },
-    community:{
-        communityId:string
-        communityIcon:string
-        communityName:string
-    }
-    createdTime:number
-    commentsCount:number
-    over18:boolean
-    title: string,
-    selfText: string,
-    thumbnail?:string,
-    video?:string
-}
+
+
 
 
 
 let initialState = {
     isLoadingPosts: false,
-    posts: [] as PostsType[]
+    /*posts: [] as Post[],*/
+    posts: [
+        {
+        postId:"u13tfk",
+        postFullName:"t3_u13tfk",
+        createdTime:1649669828,
+        commentsCount:30,
+        over18:false,
+        title:"Consecutive seasons in the English top flight",
+        selfText: "For context, I'm a year two cs student with 0 work experience in the field, and even though I've made a bunch of projects so far, including using react, this still feels off.\n" +
+            "\n" +
+            "Someone just emailed me saying they are interested to put me into a SENIOR React Dev position based on my github profile (which as I said above, contains these projects and mentions the fact that I'm a year two student).\n" +
+            "\n" +
+            "It seems that even if I do get that sort of job I won't be able to handle it and would get fired soon.\n" +
+            "\n" +
+            "Is this 100% a scam or should I bother trying to contact them for further information and try to find where their email links lead?\n" +
+            "\n" +
+            "I'm just...baffled right now.",
+        imgUrls:["https://i.redd.it/47dchtimdvs81.png"],
+        author:{
+            authorName:"RevertBackwards",
+            authorId:"t2_5tsojru7",
+            authorFlairText:":Feyenoord_Rotterdam:",
+            authorFlairTextColor:"dark",
+        },
+        community:{
+            communityName:"soccer",
+            communityIcon:"https://b.thumbs.redditmedia.com/NojkQWzGBAau2dP3q0NTY5uJisbRx_q3ithIT5iLypE.png",
+            communityId:"t5_2qi58",
+            acceptFollowers:true,
+            publicDescription:"The football subreddit. News, results and discussion about the beautiful game.",
+            isOver18:false,
+            keyColor:"",
+            primaryColor:"#1d4169",
+            subscribersCount:3384479,
+            userIsBanned:false,
+            userIsSubscribed:false
+        },
+    },
+
+    ] as Array<Post>,
 }
 
 
@@ -55,7 +78,7 @@ export const actionsPosts = {
     setIsLoading: (isLoadingPosts: boolean) => ({
         type: 'REDDIT/SET_IS_LOADING_POSTS', payload: isLoadingPosts
     } as const),
-    setPosts: (posts: Array<PostsType>) => ({
+    setPosts: (posts: Array<Post>) => ({
         type: 'REDDIT/SET_POSTS', payload: posts
     } as const),
 }
@@ -64,7 +87,7 @@ export const actionsPosts = {
 export const getPosts = (accessToken: string,
                          sort:SortType,
                          subredditName:string|null=null,
-                         searchParams:GetPostsParamsType={}): ThunkType => async (dispatch) => {
+                         searchParams?:GetPostsParamsType): ThunkType => async (dispatch) => {
     try {
         dispatch(actionsPosts.setIsLoading(true))
         const data = await RedditPostsAPI.getPosts(accessToken,sort,subredditName,searchParams)
@@ -78,13 +101,6 @@ export const getPosts = (accessToken: string,
 }
 
 
-export const postsSelector = {
-    posts: (state: AppState) => {
-        return state.postsReducer.posts
-    },
-    isLoadingPosts: (state: AppState) => {
-        return state.postsReducer.isLoadingPosts
-    },
-}
+
 export default postsReducer
 

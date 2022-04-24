@@ -623,41 +623,23 @@ interface MediaEmbed {
 }
 
 interface MediaMetadata {
-    uwnlb1tl9ze81?: Ml4N22Rjc9C81;
-    tiwq6semc9c81?: Ml4N22Rjc9C81;
-    ml4n22rjc9c81?: Ml4N22Rjc9C81;
-    g8qihv72c9c81?: G8Qihv72C9C81;
+    [key:string]:MediaMetaDataImage
+
 }
 
-interface G8Qihv72C9C81 {
-    status: string;
-    e: string;
-    m: string;
-    p: SElement[];
-    s: PurpleS;
-    id: string;
+interface MediaMetaDataImage {
+    status: string
+    e: 'Image'
+    m: string
+    p: ImageSizesAndUrl[]
+    s: ImageSizesAndUrl
+    id: string
 }
 
-interface SElement {
+interface ImageSizesAndUrl {
     y: number;
     x: number;
     u: string;
-}
-
-interface PurpleS {
-    y: number;
-    gif: string;
-    mp4: string;
-    x: number;
-}
-
-interface Ml4N22Rjc9C81 {
-    status: string;
-    e: string;
-    m: string;
-    p: SElement[];
-    s: SElement;
-    id: string;
 }
 
 interface PollData {

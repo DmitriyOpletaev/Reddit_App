@@ -1,5 +1,5 @@
 import {AppState, BaseThunkType, InferActionsTypes} from "../Redux_Store";
-import {RedditSearchAPI} from "../../api/requests/search_api";
+import {RedditSearchAPI} from "../../api/requests/search";
 import {createSearchResultsWithArrays} from "../../helpers/createSearchResults";
 
 

@@ -1,41 +1,35 @@
-import {Button, Col, Row} from "antd";
-import React from "react";
+import { Col, Row} from "antd"
+import React, {useEffect} from "react"
 import m from './ContentPage.module.scss'
-import {Sidebar} from "../sidebar/Sidebar";
-import { Posts } from "./posts/Posts";
-import Search from "antd/es/input/Search";
-import {useDispatch, useSelector} from "react-redux";
-import {authSelector} from "../../redux/reducers/auth_reducer";
-import {getPosts} from "../../redux/reducers/posts_reducer";
+import {Posts} from "./posts/Posts"
+import {useParams} from "react-router-dom"
+import {useDispatch, useSelector} from "react-redux"
+import {getPosts} from "../../redux/reducers/posts_reducer"
+import {authSelector} from "../../redux/selectors/auth_selectors"
 
-export const ContentPage=()=>{
+export const ContentPage = () => {
+    const {id,sort}=useParams()
+    const dispatch = useDispatch()
+    const accessToken=useSelector(authSelector.accessToken)
+    useEffect(()=>{
+        if(sort === "best" || sort==="new" || sort=== "rising" ||  sort==="hot" ||  sort==="top"){
+            accessToken&&dispatch(getPosts(accessToken,sort,id))
+        }
+        else{
+            accessToken&&dispatch(getPosts(accessToken,'best',id))
+        }
 
-    return(
-        <Row  wrap={false}>
-            <Col flex={'auto'} className={m.posts_line_wrapper}>
-                <div>
-                    <GetPostsButton/>
-                </div>
-                <div>
-                    <Posts/>
-                </div>
-            </Col>
-            <Col flex="350px" className={m.sidebar_wrapper} >
-                <Sidebar/>
+    },[accessToken,id,sort,dispatch])
+
+    return (
+        <Row
+            wrap={false}
+            justify={'center'}
+            className={m.content_wrapper}
+        >
+            <Col flex={'100%'}>
+                <Posts/>
             </Col>
         </Row>
-    )
-}
-
-const GetPostsButton=()=>{
-    const dispatch =useDispatch()
-    const userTokens = useSelector(authSelector.userAuthTokens)
-    function onSearch(value:string){
-        userTokens && dispatch(getPosts(userTokens.access_token,'top',null,{sr_detail:'expand subreddits'}))
-    }
-    return(
-        <div>
-            <Search onSearch={onSearch}/>
-        </div>
     )
 }

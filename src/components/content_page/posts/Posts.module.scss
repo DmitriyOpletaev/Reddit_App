@@ -1,16 +1,19 @@
-.posts_wrapper {
+.list {
+  margin-top: 50px;
+  padding: 0 20px !important;
 
-  .list {
+  .list_item {
+    background: white;
+    padding: 3% !important;
 
 
-    .list_item {
-      background: white;
-      margin-top: 20px;
-      padding: 3%;
-      -webkit-box-shadow: 0px 0px 13px 6px rgba(34, 60, 80, 0.2) inset;
-      -moz-box-shadow: 0px 0px 13px 6px rgba(34, 60, 80, 0.2) inset;
-      box-shadow: 0px 0px 13px 6px rgba(34, 60, 80, 0.2) inset;
-    }
+    -webkit-box-shadow: 0 0 13px 6px rgba(34, 60, 80, 0.2) inset;
+    -moz-box-shadow: 0 0 13px 6px rgba(34, 60, 80, 0.2) inset;
+    box-shadow: 0 0 13px 6px rgba(34, 60, 80, 0.2) inset;
   }
 
+  .list__item__meta {
+
+  }
 }
+
