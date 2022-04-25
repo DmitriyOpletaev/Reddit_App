@@ -1,4 +1,4 @@
-import {RedditApiChildrenLink, RedditAPIListingResponse} from "../types/api_types/listing-types/listing_types";
+import {RedditApiChildrenLink, RedditAPIListingResponse} from "../types/api_types/listing_types";
 import {Post} from "../types/reducers_types/PostsReducer_types";
 
 

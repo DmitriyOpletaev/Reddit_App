@@ -1,7 +1,8 @@
-import {BaseThunkType, InferActionsTypes} from "../Redux_Store"
+import {AppState, BaseThunkType, InferActionsTypes} from "../Redux_Store"
 import {GetPostsParamsType, RedditPostsAPI, SortType} from "../../api/requests/posts"
 import {createPosts} from "../../helpers/createPost";
 import {Post, PostAuthorDetails, PostCommunityDetails} from "../../types/reducers_types/PostsReducer_types";
+import {RedditAPILink} from "../../types/api_types/listing_types";
 
 type Actions = InferActionsTypes<typeof actionsPosts>
 type ThunkType = BaseThunkType<Actions>
@@ -54,7 +55,9 @@ let initialState = {
     },
 
     ] as Array<Post>,
+    postsAPIResultToTypescript:[] as Array<RedditAPILink>
 }
+export const jsonSelector=(state:AppState)=>state.postsReducer.postsAPIResultToTypescript
 
 
 const postsReducer = (state = initialState, action: Actions): InitialStateType => {
@@ -67,6 +70,10 @@ const postsReducer = (state = initialState, action: Actions): InitialStateType =
         case 'REDDIT/SET_POSTS':
             return {
                 ...state, posts: action.payload
+            }
+        case 'REDDIT/SET_JSONS'   :
+            return {
+                ...state,postsAPIResultToTypescript: state.postsAPIResultToTypescript.concat(action.payload)
             }
         default:
             return state
@@ -81,6 +88,10 @@ export const actionsPosts = {
     setPosts: (posts: Array<Post>) => ({
         type: 'REDDIT/SET_POSTS', payload: posts
     } as const),
+    setPostsJSONS: (posts: Array<RedditAPILink>) => ({
+        type: 'REDDIT/SET_JSONS', payload: posts
+    } as const),
+
 }
 
 
@@ -93,6 +104,7 @@ export const getPosts = (accessToken: string,
         const data = await RedditPostsAPI.getPosts(accessToken,sort,subredditName,searchParams)
         const posts = createPosts(data)
         dispatch(actionsPosts.setPosts(posts))
+        dispatch(actionsPosts.setPostsJSONS(data.data.children.map(e=>e.data)))
     } catch (err) {
         alert('error getPosts')
     } finally {
@@ -103,4 +115,31 @@ export const getPosts = (accessToken: string,
 
 
 export default postsReducer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

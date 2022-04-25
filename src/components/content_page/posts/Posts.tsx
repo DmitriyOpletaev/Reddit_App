@@ -7,7 +7,6 @@ import {FC} from "react";
 import {TitlePost} from "./title/Title";
 import {DescriptionPost} from "./description/DescriptionPost";
 import {CommunityAvatar} from "./community_avatar/CommunityAvatar";
-import {OpenCommentsButton} from "./open_comments_button/OpenCommentsButton";
 import {PostImages} from "./images/PostImages";
 
 const listGridParameters = {
@@ -58,6 +57,10 @@ const PostElement: FC<Post> = (post) => {
                 {selfText}{selfText}{selfText}
                 {imgUrls && <PostImages imgUrls={imgUrls}/>}
             </div>
+            <Button>
+                asadssdaasdasd
+            </Button>
+
         </List.Item>
     )
 }

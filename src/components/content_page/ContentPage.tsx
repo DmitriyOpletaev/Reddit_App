@@ -1,10 +1,10 @@
-import { Col, Row} from "antd"
+import {Button, Col, Row} from "antd"
 import React, {useEffect} from "react"
 import m from './ContentPage.module.scss'
 import {Posts} from "./posts/Posts"
 import {useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import {getPosts} from "../../redux/reducers/posts_reducer"
+import {getPosts, jsonSelector} from "../../redux/reducers/posts_reducer"
 import {authSelector} from "../../redux/selectors/auth_selectors"
 
 export const ContentPage = () => {
@@ -18,18 +18,34 @@ export const ContentPage = () => {
         else{
             accessToken&&dispatch(getPosts(accessToken,'best',id))
         }
-
     },[accessToken,id,sort,dispatch])
 
     return (
-        <Row
-            wrap={false}
-            justify={'center'}
-            className={m.content_wrapper}
-        >
-            <Col flex={'100%'}>
-                <Posts/>
-            </Col>
-        </Row>
+        <>
+            <JSONS/>
+            <Row
+                wrap={false}
+                justify={'center'}
+                className={m.content_wrapper}
+            >
+                <Col flex={'100%'}>
+                    <Posts/>
+                </Col>
+            </Row>
+        </>
+
+    )
+}
+const JSONS=()=>{
+    const allPosts=useSelector(jsonSelector)
+
+    function log(){
+        const json=JSON.stringify(allPosts)
+        console.log(json)
+    }
+    return(
+        <Button onClick={log}>
+            CONSOLE LOG
+        </Button>
     )
 }

@@ -1,9 +1,10 @@
 import {instanceReddit} from "../Reddit_API"
-import {RedditApiChildrenLink, RedditAPIListingResponse} from "../../types/api_types/listing-types/listing_types";
+import {RedditApiChildrenLink, RedditAPIListingResponse} from "../../types/api_types/listing_types";
 
 const basedParams: GetPostsParamsType = {
     sr_detail: 'expand subreddits',
-    raw_json:1
+    raw_json:1,
+    limit:100
 }
 
 
@@ -20,6 +21,7 @@ export const RedditPostsAPI = {
     },
 
 
+
 }
 
 
@@ -28,7 +30,7 @@ export type GetPostsParamsType = {
     after?: string
     before?: string
     count?: number
-    limit?: number
+    limit?: number //max-100
     show?: 'all'
     sr_detail?: 'expand subreddits',
     raw_json?:1

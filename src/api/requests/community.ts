@@ -1,6 +1,6 @@
 import {instanceReddit} from "../Reddit_API";
 import {SubscribesAction} from "../../types/reducers_types/communityReducer_types";
-import {RedditApiChildrenSubreddit, RedditAPIListingResponse} from "../../types/api_types/listing-types/listing_types";
+import {RedditApiChildrenSubreddit, RedditAPIListingResponse} from "../../types/api_types/listing_types";
 
 
 export const redditCommunityAPI = {
