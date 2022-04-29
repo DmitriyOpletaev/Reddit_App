@@ -1,5 +1,5 @@
 import {SearchAll} from "../api/requests/search";
-import {KindListing} from "../types/api_types/listing_types";
+import {KindListing} from "../types/api_types/listing/listing_types";
 import {Account, Community, Link} from "../redux/reducers/search_reducer";
 
 

@@ -2,8 +2,7 @@ import {AppState, BaseThunkType, InferActionsTypes} from "../Redux_Store"
 import {GetPostsParamsType, RedditPostsAPI, SortType} from "../../api/requests/posts"
 import {createPosts} from "../../helpers/createPost";
 import {Post, PostAuthorDetails, PostCommunityDetails} from "../../types/reducers_types/PostsReducer_types";
-import {RedditAPILink} from "../../types/api_types/listing_types";
-
+import {RedditAPILink} from "../../types/api_types/listing/links";
 type Actions = InferActionsTypes<typeof actionsPosts>
 type ThunkType = BaseThunkType<Actions>
 type InitialStateType = typeof initialState
@@ -33,6 +32,7 @@ let initialState = {
             "\n" +
             "I'm just...baffled right now.",
         imgUrls:["https://i.redd.it/47dchtimdvs81.png"],
+            video:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         author:{
             authorName:"RevertBackwards",
             authorId:"t2_5tsojru7",
@@ -104,7 +104,9 @@ export const getPosts = (accessToken: string,
         const data = await RedditPostsAPI.getPosts(accessToken,sort,subredditName,searchParams)
         const posts = createPosts(data)
         dispatch(actionsPosts.setPosts(posts))
+/*
         dispatch(actionsPosts.setPostsJSONS(data.data.children.map(e=>e.data)))
+*/
     } catch (err) {
         alert('error getPosts')
     } finally {

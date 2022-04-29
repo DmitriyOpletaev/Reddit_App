@@ -8,13 +8,13 @@ export interface Post {
     over18:boolean
     title: string,
     selfText: string,
-    imgUrls?:string[],
-    video?:string
+    imgUrls:string[]|null,
+    video:string|null
 }
 
 export interface PostCommunityDetails{
     communityId:string
-    communityIcon:string
+    communityIcon:string|null
     communityName:string
     subscribersCount:number
     publicDescription:string
@@ -26,7 +26,7 @@ export interface PostCommunityDetails{
     primaryColor:string
 }
 export interface PostAuthorDetails{
-    authorId:string
+    authorId:string|null
     authorName: string
     authorFlairText:string|null
     authorFlairTextColor:string|null

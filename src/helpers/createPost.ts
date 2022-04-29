@@ -1,10 +1,10 @@
-import {RedditApiChildrenLink, RedditAPIListingResponse} from "../types/api_types/listing_types";
+import {RedditApiChildrenLink, RedditAPIListingResponse} from "../types/api_types/listing/listing_types";
 import {Post} from "../types/reducers_types/PostsReducer_types";
 
 
-export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChildrenLink>): Array<Post> {
+export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChildrenLink>) {
 
-    return postsFromApi.data.children.map(
+    const posts: Array<Post> = postsFromApi.data.children.map(
         (element) => {
             const {
                 id,
@@ -31,7 +31,7 @@ export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChil
             const {
                 accept_followers,
                 public_description,
-                icon_img,
+                icon_img,community_icon,
                 display_name,
                 key_color,
                 primary_color,
@@ -39,8 +39,7 @@ export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChil
                 user_is_banned,
                 subscribers
             } = sr_detail
-
-            return ({
+            const post:Post = {
                 postId: id,
                 postFullName: name,
                 createdTime: created_utc,
@@ -48,17 +47,17 @@ export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChil
                 over18: over_18,
                 title: title,
                 selfText: selftext,
-                imgUrls: imageArray || imageArray2 ,
-                video: media?.reddit_video?.hls_url,
+                imgUrls: imageArray || imageArray2 || null,
+                video: media?.reddit_video?.hls_url || null,
                 author: {
                     authorName: author,
-                    authorId: author_fullname,
-                    authorFlairText: author_flair_text,
-                    authorFlairTextColor: author_flair_text_color
+                    authorId: author_fullname || null,
+                    authorFlairText: author_flair_text||null,
+                    authorFlairTextColor: author_flair_text_color||null,
                 },
                 community: {
                     communityName: display_name,
-                    communityIcon: icon_img,
+                    communityIcon: community_icon ? community_icon : icon_img.length>0 ? icon_img : null ,
                     communityId: sr_detail.name,
                     acceptFollowers: accept_followers,
                     publicDescription: public_description,
@@ -69,6 +68,8 @@ export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChil
                     userIsBanned: user_is_banned,
                     userIsSubscribed: user_is_subscriber,
                 }
-            })
+            }
+            return post
         })
+    return posts
 }

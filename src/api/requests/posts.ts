@@ -1,10 +1,10 @@
 import {instanceReddit} from "../Reddit_API"
-import {RedditApiChildrenLink, RedditAPIListingResponse} from "../../types/api_types/listing_types";
+import {RedditApiChildrenLink, RedditAPIListingResponse} from "../../types/api_types/listing/listing_types";
 
 const basedParams: GetPostsParamsType = {
     sr_detail: 'expand subreddits',
     raw_json:1,
-    limit:100
+    limit:15
 }
 
 

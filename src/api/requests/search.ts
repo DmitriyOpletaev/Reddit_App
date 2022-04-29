@@ -4,7 +4,7 @@ import {
     RedditApiChildrenSubreddit,
     RedditApiChildrenUser,
     RedditAPIListingResponse
-} from "../../types/api_types/listing_types"
+} from "../../types/api_types/listing/listing_types"
 
 export const RedditSearchAPI = {
     searchAll: (accessToken: string, searchQuery: string,) => {

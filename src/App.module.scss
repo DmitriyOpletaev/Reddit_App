@@ -1,27 +1,15 @@
-.app_layout {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: blueviolet;
-  .app_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 6vh;
-    background: rgba(243, 39, 39, 0.24);
-  }
+$fontStyle: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+sans-serif;
+$appBackground:rgb(192, 222, 237);
 
-  .app_content {
-    min-height: 94vh;
-    width: 100%;
-    max-width: 1300px;
-    margin: 0 auto;
 
-  }
+
+.appLayout {
+     min-height: 100vh ;
+     background: $appBackground;
+     .contentLayout{
+          max-width: 900px;
+          margin: 15px auto 0;
+     }
 }
-
-
-
