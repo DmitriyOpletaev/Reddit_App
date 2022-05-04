@@ -1,9 +1,9 @@
 import {Action, applyMiddleware, combineReducers, createStore,compose} from "redux"
 import thunkMiddleware,{ThunkAction} from "redux-thunk"
-import authReducer from "./reducers/auth_reducer";
-import postsReducer from "./reducers/posts_reducer";
-import {searchReducer} from "./reducers/search_reducer";
-import {communityReducer} from "./reducers/community_reducer";
+import authReducer from "./reducers/auth-reducer";
+import postsReducer from "./reducers/posts-reducer";
+import {searchReducer} from "./reducers/search-reducer";
+import {communityReducer} from "./reducers/community-reducer";
 
 const rootReducer = combineReducers({
     authReducer,

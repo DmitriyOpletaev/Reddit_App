@@ -7,6 +7,7 @@ $appBackground:rgb(192, 222, 237);
 
 .appLayout {
      min-height: 100vh ;
+     padding-bottom: 10px;
      background: $appBackground;
      .contentLayout{
           max-width: 900px;

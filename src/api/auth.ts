@@ -1,5 +1,5 @@
-import {credentialsReddit, instanceAuthReddit} from "../Reddit_API"
-import {AuthTokensResponse, NonAuthTokenResponse} from "../../types/api_types/auth_types";
+import {credentialsReddit, instanceAuthReddit} from "./index-api"
+import {AuthTokensResponse, NonAuthTokenResponse} from "../types/api_types/auth_types";
 
 
 

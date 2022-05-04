@@ -1,0 +1,24 @@
+$lightBoxShadow:rgba(0, 0, 0, 0.12) 0 1px 3px, rgba(0, 0, 0, 0.24) 0 1px 2px;
+$light_theme_background: aliceblue;
+
+
+     .appHeaderWrapper {
+          background: $light_theme_background;
+          box-shadow: $lightBoxShadow;
+
+
+          .appHeader {
+               height: 10vw;
+               min-height: 35px;
+               max-height: 60px;
+               max-width: 1400px;
+               margin: 0 auto;
+               .loginButtonContainer{
+                    text-align: center;
+               }
+          }
+     }
+
+
+
+

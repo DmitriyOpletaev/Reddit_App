@@ -1,4 +1,4 @@
-import {instanceReddit} from "../Reddit_API";
+import {instanceReddit} from "./index-api";
 
 export const redditCommentsAPI={
     commentList:(accessToken:string)=>{

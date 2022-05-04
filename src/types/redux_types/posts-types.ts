@@ -1,3 +1,4 @@
+
 export interface Post {
     postId:string
     postFullName:string
@@ -31,3 +32,8 @@ export interface PostAuthorDetails{
     authorFlairText:string|null
     authorFlairTextColor:string|null
 }
+
+
+
+
+

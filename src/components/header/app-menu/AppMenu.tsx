@@ -20,6 +20,10 @@ const menuItemsData = [
         title: 'Connect',
         icon: <AppstoreOutlined/>,
     },
+    {
+        title: 'qqweqwe',
+        icon: <AppstoreOutlined/>,
+    },
 
 ]
 
@@ -30,13 +34,15 @@ export const AppMenu: FC<AppMenuProps> = () => {
                 icon={e.icon}
                 title={e.title}
                 className={m.menuItem}
+
             >
-                <span>{e.title}</span>
             </Menu.Item>
         )
     )
     return (
         <Menu
+            inlineCollapsed={true}
+            overflowedIndicator={<AppstoreOutlined/>}
             mode={'horizontal'}
             className={m.appMenu}
         >

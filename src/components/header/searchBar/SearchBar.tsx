@@ -1,60 +1,69 @@
-import Search from "antd/es/input/Search";
 import m from './SearchBar.module.scss'
-import {AutoComplete} from "antd";
-import {useDispatch, useSelector} from "react-redux";
-import Avatar from "antd/es/avatar/avatar";
-import { search, searchSelector} from "../../../redux/reducers/search_reducer";
-import {getPosts} from "../../../redux/reducers/posts_reducer";
-import {useNavigate} from "react-router-dom";
-import {authSelector} from "../../../redux/selectors/auth_selectors";
+import {AutoComplete, Avatar, Col, Input, Row, Space} from "antd"
+import {ChangeEvent, FC, useEffect, useState} from "react"
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
+import {CloseCircleTwoTone, UserOutlined, TeamOutlined, LoadingOutlined, SearchOutlined} from "@ant-design/icons"
+import 'antd/dist/antd.css'
+import {useDispatch, useSelector} from "react-redux"
+import {authSelector} from "../../../redux/selectors/auth-selectors"
+import {searchCommunities} from "../../../redux/reducers/search-reducer"
+import {searchSelector} from "../../../redux/selectors/search-selector"
+import {SearchInput} from "./SearchInput";
+import {NavLink} from "react-router-dom";
 
-export const SearchBar = () => {
-    const accessToken = useSelector(authSelector.accessToken)
-    const isSearching = useSelector(searchSelector.isSearching)
-    const communitiesSearchResult = useSelector(searchSelector.communitiesSearchResult)
-    const accountsSearchResults = useSelector(searchSelector.accountsSearchResults)
+const users = [{name: 'Игорь Глушко', count: 17}, {name: 'Владимир Пупен', count: 18746}]
+
+export const SearchBar: FC<SearchBarProps> = () => {
+    const [searchTerm, setSearchTerm] = useState<null | string>(null)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const accessToken = useSelector(authSelector.accessToken)
+    useEffect(() => {
+        accessToken && searchTerm && dispatch(searchCommunities(accessToken, searchTerm))
+    }, [searchTerm])
 
-    function onSearch(searchQuery: string) {
-        searchQuery && accessToken && dispatch(search(accessToken, searchQuery))
-    }
-
-    const options = communitiesSearchResult || accountsSearchResults ? [
+    const searchResults = useSelector(searchSelector.communitiesSearchResults)
+    const options = [
         {
-            label: renderTitle('Сообщества'),
-            options: communitiesSearchResult && communitiesSearchResult.map(e => renderItem(e.communityName, e.subscribersCount, e.communityAvatar, e.keyColor)),
+            label: renderTitle('Спільноти'),
+            options: searchResults.map(e => renderItem(e.communityName, e.communityName, e.communityIcon || 'community', e.communityNumSubscribers)),
         },
         {
             label: renderTitle('Пользователи'),
-            options: accountsSearchResults && accountsSearchResults.map(e => renderItem(e.accountName, null, e.accountAvatar, null)),
+            options: users.map(e => renderItem(e.name, e.name, 'user', e.count)),
         },
-
-    ] : []
-
-    function onSelect(value: string) {
-        navigate(`r/${value}/new`)
-    }
-
+    ]
+    const isLoading = useSelector(searchSelector.isSearching)
     return (
-        <div className={m.searchBar__container}>
-            <AutoComplete
-                listHeight={500}
-                options={options}
-                className={m.autocomplete}
-                onSelect={onSelect}
-            >
-                <Search
-                    loading={isSearching}
-                    onSearch={onSearch}
-                    size="middle"
-                    placeholder="Поиск"/>
-            </AutoComplete>
-        </div>
+        <AutoComplete
+            listHeight={800}
+            options={options}
+            className={m.autoComplete}
+            disabled={isLoading}
+        >
+            <SearchInput isLoading={isLoading} onSearchFunc={setSearchTerm}/>
+        </AutoComplete>
     )
 }
-
-
+const renderItem = (value: string, title: string, avatar: string | 'user' | 'community', count: number) => ({
+    value: title,
+    label: (
+        <NavLink to={`community/${title}`}>
+        <Row justify={'space-between'}
+             style={{
+                 display: 'flex',
+                 justifyContent: 'space-between',
+             }}
+        >
+            <Space size={'middle'}>
+                {avatar === 'community' ? <Avatar icon={<TeamOutlined/>}/> : avatar === 'user' ?
+                    <Avatar icon={<UserOutlined/>}/> : <Avatar src={avatar}/>}
+                {title}
+            </Space>
+            <span>{count}<UserOutlined/></span>
+        </Row>
+        </NavLink>
+    ),
+})
 const renderTitle = (title: string) => (
     <span>
     {title}
@@ -64,28 +73,16 @@ const renderTitle = (title: string) => (
             target="_blank"
             rel="noopener noreferrer"
         >
-      more
+      більше
     </a>
   </span>
 )
 
-const renderItem = (title: string, count: number | null, img: string | null, color: string | null) => ({
-    value: title,
-    label: (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-            }}
-        >
-            <div style={{color: color || 'black'}}>
-                <Avatar src={img}/>
-                {title}
-            </div>
-
-            <span>
-        {count && count + ' участников'}
-      </span>
-        </div>
-    )
-})
+type SearchInputProps = {}
+type SearchBarProps = {}
+type ClearIconProps = {
+    clear: () => void,
+}
+type SearchIconProps = {
+    search: () => void,
+}

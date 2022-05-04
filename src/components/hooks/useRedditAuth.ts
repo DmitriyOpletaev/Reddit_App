@@ -1,12 +1,12 @@
 import {useDispatch, useSelector} from "react-redux"
-import {credentialsReddit} from "../../api/Reddit_API"
+import {credentialsReddit} from "../../api/index-api"
 import {useNavigate, useSearchParams} from "react-router-dom"
 import {
     getAuthAccessToken, getNoneAuthAccessToken,
     logoutThunk,
     refreshAuthAccessToken
-} from "../../redux/reducers/auth_reducer"
-import {authSelector} from "../../redux/selectors/auth_selectors"
+} from "../../redux/reducers/auth-reducer"
+import {authSelector} from "../../redux/selectors/auth-selectors"
 import {appLocalStorage} from "../../helpers/localStorage"
 
 

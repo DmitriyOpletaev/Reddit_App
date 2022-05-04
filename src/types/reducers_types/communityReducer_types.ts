@@ -1,1 +1,0 @@
-export type SubscribesAction = 'sub' | 'unsub'

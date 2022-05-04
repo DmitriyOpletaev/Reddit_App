@@ -1,5 +1,5 @@
 import {RedditApiChildrenLink, RedditAPIListingResponse} from "../types/api_types/listing/listing_types";
-import {Post} from "../types/reducers_types/PostsReducer_types";
+import {Post} from "../types/redux_types/posts-types";
 
 
 export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChildrenLink>) {

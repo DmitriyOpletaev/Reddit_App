@@ -2,73 +2,30 @@ import React, {useEffect} from 'react'
 import m from './App.module.scss'
 import {AppHeader} from "./components/header/Header"
 import {useRedditAuth} from "./components/hooks/useRedditAuth"
-import { Col, Row} from "antd"
-import {ProfileSidebar} from "./components/profile-sidebar/ProfileSidebar"
-import {Posts} from "./components/posts/Posts"
-import {ColProps} from "antd/lib/grid/col"
+import { Route, Routes} from 'react-router-dom'
+import {CommunityPage} from "./components/community-page/CommunityPage"
 
 
 const App = () => {
-    const {applicationAuthOnLoad} = useRedditAuth()
+    const {applicationAuthOnLoad, isLoadingAuthentication,accessToken} = useRedditAuth()
+
     useEffect(() => {
         applicationAuthOnLoad()
     }, [])
 
+    if (isLoadingAuthentication) return <div>Loading</div>
+    /*if (!accessToken) return <div>Error</div>*/
     return (
-        <section className={m.appLayout}>
-            <AppHeader/>
-            <div className={m.contentLayout}>
-                <Row
-                    gutter={[0, 20]}
-                    justify={'space-around'}
-                >
-                    <Col className={m.sidebarsLayout} {...sidebarsLayoutColSettings}>
-                        <Row gutter={[10,15]} >
-                            <Col {...sidebarColSettigs}>
-                                <ProfileSidebar/>
-                            </Col>
-                            <Col {...sidebarColSettigs}>
-                                <ProfileSidebar/>
-                            </Col>
-                            <Col {...sidebarColSettigs}>
-                                <ProfileSidebar/>
-                            </Col>
-                        </Row>
-                    </Col>
-                    <Col className={m.postsLayout} {...contentColSettings}>
-                        <Posts/>
-                    </Col>
-                </Row>
-            </div>
-        </section>
-
+            <section className={m.appLayout}>
+                <AppHeader/>
+                <Routes>
+                    <Route path='/' element={<h1>Home</h1>}/>
+                    <Route path="community/:communityName" element={<CommunityPage/>}/>
+                    <Route path="community" element={<h1>CommunitySearch</h1>}/>
+                    <Route path='*' element={<h1>Error</h1>}/>
+                </Routes>
+            </section>
     )
-}
-const sidebarsLayoutColSettings: ColProps = {
-    xs: {
-        span: 24
-    },
-    sm: {
-        span: 22
-    },
-    lg: {
-        span: 7
-
-    },
-}
-const sidebarColSettigs:ColProps={
-    lg:{span:24}, xs:{span:8}
-}
-const contentColSettings: ColProps = {
-    xs: {
-        span: 24
-    },
-    sm: {
-        span: 22
-    },
-    lg: {
-        span: 16
-    },
 }
 
 

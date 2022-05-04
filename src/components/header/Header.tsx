@@ -1,30 +1,39 @@
-import m from './Header.module.scss'
+import './Header.scss'
 import React from "react"
-import {Col, Row} from "antd";
-import {AppMenu} from "./app-menu/AppMenu";
-import {LoginButton} from "../common/login_button/Login_Button";
-import {SearchBar} from "./searchBar/SearchBar";
-import { SettingOutlined,RocketTwoTone} from '@ant-design/icons';
-import {instanceReddit} from "../../api/Reddit_API";
-import {useRedditAuth} from "../hooks/useRedditAuth";
-
+import {Col, Row} from "antd"
+import {LoginButton} from "../common/login_button/LoginButton"
+import {ColProps} from "antd/es"
+import {SettingTwoTone} from "@ant-design/icons"
+import {SearchBar} from "./searchBar/SearchBar"
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import {HomeButton} from "./HomeButton";
 
 export const AppHeader = () => {
-
+    const {xs,lg} = useBreakpoint()
     return (
-        <div className={m.headerWrapper}>
-            <Row justify={'space-between'} align={'middle'} className={m.appHeader}>
-                <Col span={11}>
-                    <AppMenu/>
+        <div className={'appHeaderWrapper'}>
+            <Row justify={'space-between'} align={'middle'} className={'appHeader'}>
+                <Col {...menuColSettings}>
+                    {/*<AppMenu/>*/}
                 </Col>
-                <Col span={2}>
-                    <TestApiButton/>
+                <Col {...logoColSettings}>
+                    <Row justify={'center'} align={'middle'}>
+                        <HomeButton size={xs? 22 :40}/>
+                    </Row>
                 </Col>
-                <Col span={11}>
-                    <Row justify={'space-around'}>
-                        <SearchBar/>
-                        <SettingOutlined/>
-                        <LoginButton/>
+                <Col {...thirdSettings} >
+                    <Row justify={'space-between'} align={'middle'}>
+                        <Col {...searchBarColSettings}>
+                            <SearchBar/>
+                        </Col>
+                        <Col  {...someButtonColSettings} >
+                            <SettingTwoTone />
+                        </Col>
+                        <Col  {...loginButtonColSettings} className={'loginButtonContainer'} >
+                            <LoginButton
+                                mini={xs} size={lg ? 'middle' : 'small'}
+                            />
+                        </Col>
                     </Row>
                 </Col>
             </Row>
@@ -33,21 +42,98 @@ export const AppHeader = () => {
     )
 }
 
-const TestApiButton=()=>{
-    const {accessToken}=useRedditAuth()
-    const urls={
-        scope:'api/v1/scopes',
-        mineSubscriber:'subreddits/mine/subscriber',
-        srPopular:'subreddits/popular',
-        srNew:'subreddits/new',
-        srDefault:'subreddits/default',
-        srGold:'subreddits/gold',//dont work =(
-        widgets:'r/worldnews/api/widgets'
+
+
+const menuColSettings: ColProps = {
+    xs: {
+        span: 3,
+        order: 1
+    },
+    sm: {
+        span: 3,
+        order: 1
+    },
+    md: {
+        span: 11
+    },
+    lg: {
+        span: 11
     }
-    async function testApi(){
-        accessToken && await instanceReddit(accessToken).get(urls.widgets).then(res=>res.data)
-    }
-    return(
-        <RocketTwoTone style={{fontSize:'1.8em'}} twoToneColor={'blue'} onClick={testApi}/>
-    )
 }
+const logoColSettings: ColProps = {
+    xs: {
+        span: 3,
+        order: 2
+    },
+    sm: {
+        span: 1,
+        order: 2
+    },
+    md: {
+        span: 1
+    },
+    lg: {
+        span: 1
+    }
+}
+const thirdSettings: ColProps = {
+    xs: {
+        span: 18,
+        order: 3
+    },
+    sm: {
+        span: 18,
+        order: 3
+    },
+    md: {
+        span: 11
+    },
+    lg: {
+        span: 11
+    }
+}
+
+const searchBarColSettings: ColProps = {
+    xs: {
+        span: 17
+    },
+    sm: {
+        span: 16
+    },
+    md: {
+        span: 15
+    },
+    lg: {
+        span: 16
+    }
+}
+const someButtonColSettings: ColProps = {
+    xs: {
+        span: 0
+    },
+    sm: {
+        span: 1,
+    },
+    md: {
+        span: 1
+    },
+    lg: {
+        span: 1
+    }
+}
+const loginButtonColSettings: ColProps = {
+    xs: {
+        span: 4
+    },
+    sm: {
+        span: 5
+    },
+    md: {
+        span: 6
+    },
+    lg: {
+        span: 6
+    }
+}
+
+

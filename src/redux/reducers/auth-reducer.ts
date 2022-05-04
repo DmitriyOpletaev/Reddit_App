@@ -1,5 +1,5 @@
 import {BaseThunkType, InferActionsTypes} from "../Redux_Store"
-import {RedditAuthAPI} from "../../api/requests/auth";
+import {RedditAuthAPI} from "../../api/auth";
 import {appLocalStorage} from "../../helpers/localStorage";
 
 

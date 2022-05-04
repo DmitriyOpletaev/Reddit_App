@@ -42,6 +42,39 @@ interface Link {
     awarders: unknown[]
     banned_at_utc: unknown
     banned_by: unknown
+    can_gild: boolean
+    can_mod_post: boolean
+    clicked: boolean
+    contest_mode: boolean
+    created: number
+    created_utc: number
+    discussion_type: unknown
+    domain: string
+    downs: number
+    gallery_data?: GalleryData
+    gilded: number
+    gildings: Gildings
+    hidden: boolean
+    hide_score: boolean
+    id: string
+    is_created_from_ads_ui: boolean
+    is_crosspostable: boolean
+    is_gallery?: boolean
+    is_meta: boolean
+    is_original_content: boolean
+    is_reddit_media_domain: boolean
+    is_robot_indexable: boolean
+    is_self: boolean
+    is_video: boolean
+    likes: unknown
+    link_flair_background_color: string
+    link_flair_css_class?: string
+    link_flair_richtext: FlairRichtext[]
+    link_flair_template_id?: string
+    link_flair_text?: string
+    link_flair_text_color: string
+    link_flair_type: string
+    locked: boolean
     media?: SecureMedia
     media_embed: MediaEmbed
     media_metadata?: MediaMetadata
@@ -56,13 +89,17 @@ interface Link {
     num_crossposts: number
     num_reports: unknown
     over_18: boolean
+    parent_whitelist_status: string
+    permalink: string
+    pinned: boolean
+    post_hint?: string
     preview?: Preview
     pwls: number
     quarantine: boolean
     removal_reason: unknown
     removed_by: unknown
-    report_reasons: unknown
     removed_by_category?: string
+    report_reasons: unknown
     saved: boolean
     score: number
     secure_media?: SecureMedia
@@ -95,41 +132,4 @@ interface Link {
     visited: boolean
     whitelist_status: string
     wls: number
-    can_gild: boolean
-    can_mod_post: boolean
-    parent_whitelist_status: string
-    permalink: string
-    pinned: boolean
-    post_hint?: string
-    is_created_from_ads_ui: boolean
-    is_crosspostable: boolean
-    is_gallery?: boolean
-    is_meta: boolean
-    is_original_content: boolean
-    is_reddit_media_domain: boolean
-    is_robot_indexable: boolean
-    is_self: boolean
-    is_video: boolean
-    likes: unknown
-    link_flair_background_color: string
-    link_flair_css_class?: string
-    link_flair_richtext: FlairRichtext[]
-    link_flair_template_id?: string
-    link_flair_text?: string
-    link_flair_text_color: string
-    link_flair_type: string
-    locked: boolean
-    gallery_data?: GalleryData
-    gilded: number
-    gildings: Gildings
-    hidden: boolean
-    hide_score: boolean
-    id: string
-    clicked: boolean
-    contest_mode: boolean
-    created: number
-    created_utc: number
-    discussion_type: unknown
-    domain: string
-    downs: number
 }

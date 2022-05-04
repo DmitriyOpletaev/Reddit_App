@@ -1,8 +1,9 @@
-import {SearchAll} from "../api/requests/search";
+import {SearchAll} from "../api/search";
 import {KindListing} from "../types/api_types/listing/listing_types";
-import {Account, Community, Link} from "../redux/reducers/search_reducer";
+// import {Community} from "../redux/reducers/search-reducer";
 
 
+/*
 export function createSearchResultsWithArrays(data:Array<SearchAll>|SearchAll):{communitiesArray:Community[]|null,accountsArray:Account[]|null,linksArray:Link[]|null}{
     if(Array.isArray(data)){
         let communitiesArray = [] as Array<Community>
@@ -63,4 +64,4 @@ function createSearchResults(data: SearchAll):{communitiesArray:Community[]|null
         accountsArray:accountsArray.length>0 ? accountsArray : null,
         linksArray:linksArray.length>0 ? linksArray : null,
     }
-}
+}*/

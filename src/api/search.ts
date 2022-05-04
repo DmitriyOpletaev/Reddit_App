@@ -1,10 +1,10 @@
-import {instanceReddit} from "../Reddit_API";
+import {instanceReddit} from "./index-api";
 import {
     RedditApiChildrenLink,
     RedditApiChildrenSubreddit,
     RedditApiChildrenUser,
     RedditAPIListingResponse
-} from "../../types/api_types/listing/listing_types"
+} from "../types/api_types/listing/listing_types"
 
 export const RedditSearchAPI = {
     searchAll: (accessToken: string, searchQuery: string,) => {

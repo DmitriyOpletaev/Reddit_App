@@ -7,4 +7,11 @@ export const postsSelector = {
     isLoadingPosts: (state: AppState) => {
         return state.postsReducer.isLoadingPosts
     },
+    nextPageToken: (state: AppState) => {
+        return state.postsReducer.nextPageToken
+    },
+    error: (state: AppState) => {
+        return state.postsReducer.error
+    },
+
 }
