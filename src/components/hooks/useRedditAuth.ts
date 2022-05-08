@@ -6,7 +6,7 @@ import {
     logoutThunk,
     refreshAuthAccessToken
 } from "../../redux/reducers/auth-reducer"
-import {authSelector} from "../../redux/selectors/auth-selectors"
+import {authSelector} from "../../redux/selectors/auth-selector"
 import {appLocalStorage} from "../../helpers/localStorage"
 
 

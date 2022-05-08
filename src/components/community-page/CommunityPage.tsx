@@ -1,43 +1,65 @@
-import React, {FC, useContext, useEffect} from "react"
-import m from "../../App.module.scss";
-import {Col, Row} from "antd";
-import {ProfileSidebar} from "../profile-sidebar/ProfileSidebar";
-import {PostList} from "../posts/PostList";
-import {ColProps} from "antd/lib/grid/col";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
-import {getPosts} from "../../redux/reducers/posts-reducer";
-import {authSelector} from "../../redux/selectors/auth-selectors";
+import React, {FC, useEffect} from "react"
+import m from "../../App.module.scss"
+import {Col, Row} from "antd"
+import {ProfileSidebar} from "../profile-sidebar/ProfileSidebar"
+import {ColProps} from "antd/lib/grid/col"
+import {useDispatch, useSelector} from "react-redux"
+import {useParams, useSearchParams} from "react-router-dom"
+import {authSelector} from "../../redux/selectors/auth-selector"
+import {CommunityPostsSort} from "../../types/api_types/request-types";
+import {PostsSortButtons} from "../posts/PostsSortButtons";
 import {LoadMoreButton} from "../posts/LoadMoreButton";
 import {postsSelector} from "../../redux/selectors/post-selector";
+import {PostItem} from "../posts/PostItem";
+import {getPosts} from "../../redux/reducers/posts-thunk";
 
 export const CommunityPage: FC<ContentPageProps> = () => {
     const accessToken = useSelector(authSelector.accessToken)
-    const {communityName}=useParams()
+    const {communityName} = useParams()
     const dispatch = useDispatch()
-    const nextPageToken=useSelector(postsSelector.nextPageToken)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const sort = searchParams.get('sort')
 
+
+
+    useEffect(() => {
+        if (accessToken) {
+            if (Object.values(CommunityPostsSort).includes(sort as CommunityPostsSort)) {
+                dispatch(getPosts(accessToken, sort as CommunityPostsSort, communityName))
+            } else {
+                dispatch(getPosts(accessToken, CommunityPostsSort.New, communityName))
+                setSearchParams(`sort=${CommunityPostsSort.New}`)
+            }
+        }
+    }, [communityName])
 
     useEffect(()=>{
-       communityName &&  accessToken && dispatch(getPosts(accessToken,'new', communityName ))
-    },[communityName])
 
-    function getMoreCommunityPosts(){
-        communityName &&
-        accessToken &&
-        nextPageToken &&
-        dispatch(getPosts(accessToken,'new',communityName,nextPageToken))
+    },[sort])
+
+
+    function sortPosts(sortValue: string) {
+        dispatch(getPosts(accessToken, sortValue as CommunityPostsSort, communityName))
+        setSearchParams(`sort=${sortValue}`)
     }
 
 
+    const nextPageToken = useSelector(postsSelector.nextPageToken)
+    function loadMorePosts(){
+       nextPageToken && dispatch(getPosts(accessToken,sort as CommunityPostsSort,communityName,nextPageToken))
+    }
+
+    const posts = useSelector(postsSelector.posts)
+    const Posts = posts.map((post) => (<PostItem post={post}/>))
     return (
         <div className={m.contentLayout}>
             <Row
                 gutter={[0, 20]}
                 justify={'space-around'}
             >
+
                 <Col className={m.sidebarsLayout} {...sidebarsLayoutColSettings}>
-                    <Row gutter={[10,15]} >
+                    <Row gutter={[10, 15]}>
                         <Col {...sidebarColSettigs}>
                             <ProfileSidebar/>
                         </Col>
@@ -49,18 +71,23 @@ export const CommunityPage: FC<ContentPageProps> = () => {
                         </Col>
                     </Row>
                 </Col>
+
                 <Col className={m.postsLayout} {...contentColSettings}>
-                    <PostList/>
-                    <LoadMoreButton func={getMoreCommunityPosts}/>
+                    <Row gutter={[0, 18]} className={'postsLayout'} justify={'center'}>
+                        <PostsSortButtons sort={Object.values(CommunityPostsSort)} callback={sortPosts}/>
+                        {Posts}
+                        <LoadMoreButton func={loadMorePosts}/>
+                    </Row>
                 </Col>
             </Row>
         </div>
     )
 
 }
+
 const sidebarsLayoutColSettings: ColProps = {
     xs: {
-        span: 24
+        span: 23
     },
     sm: {
         span: 22
@@ -70,15 +97,15 @@ const sidebarsLayoutColSettings: ColProps = {
 
     },
 }
-const sidebarColSettigs:ColProps={
-    lg:{span:24}, xs:{span:8}
+const sidebarColSettigs: ColProps = {
+    lg: {span: 24}, xs: {span: 8}
 }
 const contentColSettings: ColProps = {
     xs: {
-        span: 24
+        span: 23,
     },
     sm: {
-        span: 22
+        span: 22,
     },
     lg: {
         span: 16

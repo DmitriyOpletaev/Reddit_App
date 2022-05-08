@@ -1,5 +1,5 @@
 import {Button} from "antd"
-import {useRedditAuth} from "../../hooks/useRedditAuth";
+import {useRedditAuth} from "../hooks/useRedditAuth";
 import {LogoutOutlined, LoginOutlined} from '@ant-design/icons'
 import {FC} from "react"
 import {SizeType} from "antd/es/config-provider/SizeContext";

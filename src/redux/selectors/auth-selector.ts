@@ -6,4 +6,5 @@ export const authSelector={
     isLoadingAuthentication: (state:AppState)=>state.authReducer.isLoadingAuthentication,
     isUserAuthorise:(state:AppState)=>state.authReducer.isUserAuthorise,
     accessTokenExpiresIn: (state:AppState)=>state.authReducer.accessTokenExpiresIn,
+    isAppAuthorize: (state:AppState)=>state.authReducer.isAppAuthorize,
 }

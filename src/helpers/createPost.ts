@@ -1,10 +1,11 @@
 import {RedditApiChildrenLink, RedditAPIListingResponse} from "../types/api_types/listing/listing_types";
-import {Post} from "../types/redux_types/posts-types";
+import {PostData} from "../types/redux_types/posts-types";
+import {RedditAPILink} from "../types/api_types/listing/links";
 
 
 export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChildrenLink>) {
 
-    const posts: Array<Post> = postsFromApi.data.children.map(
+    const posts: Array<PostData> = postsFromApi.data.children.map(
         (element) => {
             const {
                 id,
@@ -21,7 +22,7 @@ export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChil
                 author_fullname,
                 author_flair_text,
                 author_flair_text_color,
-                sr_detail
+                sr_detail,likes
             } = element.data
             const keysMediaMetadata = media_metadata && Object.keys(media_metadata)
             const imageArray2 = media_metadata &&  keysMediaMetadata?.map(e=>media_metadata[e].s.u)
@@ -33,15 +34,19 @@ export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChil
                 public_description,
                 icon_img,community_icon,
                 display_name,
-                key_color,
-                primary_color,
+                key_color:sr_key_color,
+                primary_color:sr_primary_color,
                 user_is_subscriber,
                 user_is_banned,
-                subscribers
+                subscribers,
+                banner_img,header_img,
+                over_18:sr_over18,
+                subreddit_type,
+                name:communityId
+
             } = sr_detail
-            const post:Post = {
-                postId: id,
-                postFullName: name,
+            const post:PostData = {
+                postId: name,
                 createdTime: created_utc,
                 commentsCount: num_comments,
                 over18: over_18,
@@ -58,18 +63,33 @@ export function createPosts(postsFromApi: RedditAPIListingResponse<RedditApiChil
                 community: {
                     communityName: display_name,
                     communityIcon: community_icon ? community_icon : icon_img.length>0 ? icon_img : null ,
-                    communityId: sr_detail.name,
+                    communityId,
                     acceptFollowers: accept_followers,
-                    publicDescription: public_description,
-                    isOver18: sr_detail.over_18,
-                    keyColor: key_color,
-                    primaryColor: primary_color,
+                    communityMiniDescription: public_description,
+                    communityType:subreddit_type,
+                    isOver18: sr_over18,
+                    keyColor: sr_key_color,
+                    communityColor: sr_primary_color || null,
                     subscribersCount: subscribers,
-                    userIsBanned: user_is_banned,
-                    userIsSubscribed: user_is_subscriber,
+                    communityBanner:banner_img || null,
+                    communityHeaderImg:header_img||null,
+                    authUserInfo:{
+                        userIsBanned: user_is_banned||false,
+                        userIsSubscribed: user_is_subscriber||false,
+                        isLoadingSubscribing:false
+                    }
+                },
+                userActivity:{
+                    userRate:userRate(likes)
                 }
             }
             return post
         })
     return posts
+}
+
+function userRate(likes:RedditAPILink['likes']):PostData['userActivity']['userRate']{
+    if(likes === true)return 'like'
+    if(likes === false)return 'dislike'
+    else return 'none'
 }

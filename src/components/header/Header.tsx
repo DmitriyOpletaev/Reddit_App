@@ -1,7 +1,7 @@
 import './Header.scss'
 import React from "react"
 import {Col, Row} from "antd"
-import {LoginButton} from "../common/login_button/LoginButton"
+import {LoginButton} from "../common/LoginButton"
 import {ColProps} from "antd/es"
 import {SettingTwoTone} from "@ant-design/icons"
 import {SearchBar} from "./searchBar/SearchBar"

@@ -5,8 +5,9 @@ import {appLocalStorage} from "../../helpers/localStorage";
 
 let initialState = {
     isLoadingAuthentication: false,
+    isAppAuthorize:false,
     isUserAuthorise: false,
-    accessToken: null as string | null,
+    accessToken: '',
     accessTokenExpiresIn: null as number | null,
     refreshToken: null as string | null,
 }
@@ -22,7 +23,7 @@ const authReducer = (state = initialState, action: Actions): InitialState => {
         case 'REDDIT/SET_USER_AUTH_TOKENS':
             const {refreshToken, accessToken, isUserAuthorise} = action.payload
             return {
-                ...state, isUserAuthorise, accessToken, refreshToken
+                ...state, isUserAuthorise, accessToken, refreshToken,isAppAuthorize: true
             }
         default:
             return state

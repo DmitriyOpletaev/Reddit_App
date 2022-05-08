@@ -5,7 +5,7 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import {CloseCircleTwoTone, UserOutlined, TeamOutlined, LoadingOutlined, SearchOutlined} from "@ant-design/icons"
 import 'antd/dist/antd.css'
 import {useDispatch, useSelector} from "react-redux"
-import {authSelector} from "../../../redux/selectors/auth-selectors"
+import {authSelector} from "../../../redux/selectors/auth-selector"
 import {searchCommunities} from "../../../redux/reducers/search-reducer"
 import {searchSelector} from "../../../redux/selectors/search-selector"
 import {SearchInput} from "./SearchInput";

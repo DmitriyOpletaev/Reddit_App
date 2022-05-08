@@ -50,12 +50,12 @@ interface Link {
     created_utc: number
     discussion_type: unknown
     domain: string
-    downs: number
+    downs: number //коефіцієнт голосів проти --- завжди = 0
     gallery_data?: GalleryData
     gilded: number
     gildings: Gildings
     hidden: boolean
-    hide_score: boolean
+    hide_score: boolean  // is  showing score
     id: string
     is_created_from_ads_ui: boolean
     is_crosspostable: boolean
@@ -66,7 +66,7 @@ interface Link {
     is_robot_indexable: boolean
     is_self: boolean
     is_video: boolean
-    likes: unknown
+    likes: true|false|null // like, dislike,none
     link_flair_background_color: string
     link_flair_css_class?: string
     link_flair_richtext: FlairRichtext[]
@@ -101,7 +101,7 @@ interface Link {
     removed_by_category?: string
     report_reasons: unknown
     saved: boolean
-    score: number
+    score: number //rating 0 - 1
     secure_media?: SecureMedia
     secure_media_embed: SecureMediaEmbed
     selftext: string
@@ -123,7 +123,7 @@ interface Link {
     top_awarded_type?: string
     total_awards_received: number
     treatment_tags: unknown[]
-    ups: number
+    ups: number //коефіцієнт голосів за
     upvote_ratio: number
     url: string
     url_overridden_by_dest?: string

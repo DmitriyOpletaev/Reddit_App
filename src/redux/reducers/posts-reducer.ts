@@ -1,25 +1,17 @@
-import {BaseThunkType, InferActionsTypes} from "../Redux_Store"
-import {RedditPostsAPI} from "../../api/posts"
-import {createPosts} from "../../helpers/createPost"
-import {Post} from "../../types/redux_types/posts-types"
-import {PostsSortType} from "../../types/api_types/request-types"
-import {apiErrors} from "../../helpers/api-errors";
-
-type Actions = InferActionsTypes<typeof actionsPosts>
-type ThunkType = BaseThunkType<Actions>
-type InitialStateType = typeof initialState
+import {InferActionsTypes} from "../Redux_Store"
+import {PostData} from "../../types/redux_types/posts-types"
+import {changeArrayElement, changeArrayElement2} from "../../helpers/changeArrayElement";
 
 
 let initialState = {
     isLoadingPosts: false,
-    sort: 'new' as PostsSortType ,
-    posts: [] as Post[],
+    posts: [] as PostData[],
     error: null as string | null,
     nextPageToken: null as string | null
 }
 
 
-const postsReducer = (state = initialState, action: Actions): InitialStateType => {
+const postsReducer = (state = initialState, action: PostsActions): InitialStateType => {
     switch (action.type) {
         case 'REDDIT/SET_IS_LOADING_POSTS':
             return {
@@ -41,95 +33,52 @@ const postsReducer = (state = initialState, action: Actions): InitialStateType =
             return {
                 ...state, error: action.payload
             }
+        case 'REDDIT/SET_COMMUNITY_SUBSCRIBE':
+            return {
+                ...state,
+                posts: changeArrayElement2(action.payload.communityId, action.payload.userIsSubscribe, state.posts)
+            }
+        case 'REDDIT/SET_IS_LOADING_SUBSCRIBE_COMMUNITY':
+            return {
+                ...state, posts: changeArrayElement(action.payload.communityId, action.payload.isLoading, state.posts)
+            }
         default:
             return state
     }
 }
 
 
-export const actionsPosts = {
+export const postsActions = {
     setIsLoading: (isLoadingPosts: boolean) => ({
         type: 'REDDIT/SET_IS_LOADING_POSTS', payload: isLoadingPosts
     } as const),
-    setPosts: (posts: Array<Post>, nextPageToken: string | null) => ({
+    setPosts: (posts: Array<PostData>, nextPageToken: string | null) => ({
         type: 'REDDIT/SET_POSTS', payload: {posts, nextPageToken}
     } as const),
-    setMorePost: (posts: Array<Post>, nextPageToken: string | null) => ({
+    setMorePost: (posts: Array<PostData>, nextPageToken: string | null) => ({
         type: 'REDDIT/SET_MORE_POSTS', payload: {posts, nextPageToken}
     } as const),
     setError: (error: string) => ({
         type: 'REDDIT/SET_ERROR_LOADING_POSTS', payload: error
     } as const),
-}
+    setSubscribeCommunity: (communityId: PostData['community']['communityId'],
+                            userIsSubscribe: boolean) => ({
+        type: 'REDDIT/SET_COMMUNITY_SUBSCRIBE', payload: {communityId, userIsSubscribe}
+    } as const),
+    setIsLoadingSubscribeCommunity: (communityId: PostData['community']['communityId'],
+                                     isLoading: boolean) => ({
+        type: 'REDDIT/SET_IS_LOADING_SUBSCRIBE_COMMUNITY', payload: {communityId, isLoading}
+    } as const)
+} as const
 
 
-export const getPosts = (accessToken: string,
-                         sort: PostsSortType,
-                         subredditName: string | null = null,
-                         nextPageToken?: string
-): ThunkType => async (dispatch) => {
-    try {
-        dispatch(actionsPosts.setIsLoading(true))
-        const data = await RedditPostsAPI.getCommunityPosts(accessToken, sort, subredditName, nextPageToken)
-        const posts = createPosts(data)
-        nextPageToken
-            ? dispatch(actionsPosts.setMorePost(posts, data.data.after))
-            : dispatch(actionsPosts.setPosts(posts, data.data.after))
-    } catch (err) {
-        dispatch(actionsPosts.setError(apiErrors(err)))
-    } finally {
-        dispatch(actionsPosts.setIsLoading(false))
-    }
-}
 
 
 export default postsReducer
 
+export type PostsActions = InferActionsTypes<typeof postsActions>
 
-const posts: Array<Post> = [
-    {
-        postId: "u13tfk",
-        postFullName: "t3_u13tfk",
-        createdTime: 1649669828,
-        commentsCount: 30,
-        over18: false,
-        title: "Consecutive seasons in the English top flight",
-        selfText: "For context, I'm a year two cs student with 0 work experience in the field, and even though I've made a bunch of projects so far, including using react, this still feels off.\n" +
-            "\n" +
-            "Someone just emailed me saying they are interested to put me into a SENIOR React Dev position based on my github profile (which as I said above, contains these projects and mentions the fact that I'm a year two student).\n" +
-            "\n" +
-            "It seems that even if I do get that sort of job I won't be able to handle it and would get fired soon.\n" +
-            "\n" +
-            "Is this 100% a scam or should I bother trying to contact them for further information and try to find where their email links lead?\n" +
-            "\n" +
-            "I'm just...baffled right now.",
-        imgUrls: ["https://i.redd.it/47dchtimdvs81.png"],
-        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        author: {
-            authorName: "RevertBackwards",
-            authorId: "t2_5tsojru7",
-            authorFlairText: ":Feyenoord_Rotterdam:",
-            authorFlairTextColor: "dark",
-        },
-        community: {
-            communityName: "soccer",
-            communityIcon: "https://b.thumbs.redditmedia.com/NojkQWzGBAau2dP3q0NTY5uJisbRx_q3ithIT5iLypE.png",
-            communityId: "t5_2qi58",
-            acceptFollowers: true,
-            publicDescription: "The football subreddit. News, results and discussion about the beautiful game.",
-            isOver18: false,
-            keyColor: "",
-            primaryColor: "#1d4169",
-            subscribersCount: 3384479,
-            userIsBanned: false,
-            userIsSubscribed: false
-        },
-    },
-
-]
-
-
-
+type InitialStateType = typeof initialState
 
 
 

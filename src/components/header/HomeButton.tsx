@@ -7,10 +7,9 @@ import {NavLink} from "react-router-dom"
 export const HomeButton:FC<AppLogoProps>=({size})=>{
 
     return(
-        <NavLink to={'/'}>
-            <Avatar size={size} src={appLogoPng}/>
-        </NavLink>
-
+            <NavLink to={'/'}>
+                <Avatar size={size} src={appLogoPng}/>
+            </NavLink>
     )
 }
 

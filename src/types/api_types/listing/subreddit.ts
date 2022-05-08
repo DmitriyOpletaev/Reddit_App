@@ -33,15 +33,15 @@ export interface SrDetail{
     show_media: boolean
     submit_link_label?: string
     submit_text_label?: string
-    subreddit_type: string
+    subreddit_type: SubredditType
     subscribers: number
     title: string
     url: string
-    user_is_banned: boolean
-    user_is_contributor: boolean
-    user_is_moderator: boolean
-    user_is_muted: boolean
-    user_is_subscriber: boolean
+    user_is_banned: boolean|null
+    user_is_contributor: boolean|null
+    user_is_moderator: boolean|null
+    user_is_muted: boolean|null
+    user_is_subscriber: boolean|null
 }
 
 export type RedditAPISubreddit= {
@@ -148,6 +148,8 @@ export type RedditAPISubreddit= {
     wiki_enabled: boolean | null
     wls: number | null
 }
+
+
 
 enum AdvertiserCategory {
     Empty = "",

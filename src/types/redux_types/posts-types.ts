@@ -1,36 +1,48 @@
-
-export interface Post {
-    postId:string
-    postFullName:string
+export interface PostData {
+    postId: string
+    isPostHidden:boolean|null
     author: PostAuthorDetails
-    community:PostCommunityDetails
-    createdTime:number
-    commentsCount:number
-    over18:boolean
+    community: PostCommunityDetails
+    createdTime: number
+    isOver18Post: boolean
     title: string,
     selfText: string,
-    imgUrls:string[]|null,
-    video:string|null
+    imgUrls: string[] | null,
+    video: string | null
+    rating:Rating
+}
+interface Rating{
+    userRate:'like'|'dislike'|'none'
+    likes:number
+    dislikes:number
+    commentsCount:number
+    isLockedToNewComments:boolean
+}
+interface PostCommunityDetails {
+    acceptFollowers: boolean
+    authUserInfo: {
+        userIsBanned: boolean
+        userIsSubscribed: boolean
+        isLoadingSubscribing:boolean
+    }
+    communityColor: string | null   //primaryColor - цвет сабреддита
+    communityBanner: string | null
+    communityHeaderImg:string|null
+    communityIcon: string | null
+    communityId: string
+    communityName: string
+    communityMiniDescription: string
+    communityType: string
+    isOver18Community: boolean
+    subscribersCount: number
 }
 
-export interface PostCommunityDetails{
-    communityId:string
-    communityIcon:string|null
-    communityName:string
-    subscribersCount:number
-    publicDescription:string
-    keyColor:string
-    userIsSubscribed:boolean
-    userIsBanned:boolean
-    isOver18:boolean
-    acceptFollowers:boolean
-    primaryColor:string
-}
-export interface PostAuthorDetails{
-    authorId:string|null
+interface PostAuthorDetails {
+    authorId: string | null
     authorName: string
+    authorColor: string | null
     authorFlairText:string|null
-    authorFlairTextColor:string|null
+    authorPremium:boolean
 }
 
 

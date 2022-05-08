@@ -3,7 +3,11 @@ $fontStyle: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
 sans-serif;
 $appBackground:rgb(192, 222, 237);
 
-
+body{
+     padding: 0;
+     margin: 0;
+     overflow-x: hidden;
+}
 
 .appLayout {
      min-height: 100vh ;
@@ -12,5 +16,9 @@ $appBackground:rgb(192, 222, 237);
      .contentLayout{
           max-width: 900px;
           margin: 15px auto 0;
+
+          .postsLayout{
+
+          }
      }
 }
